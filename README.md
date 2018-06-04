@@ -5,5 +5,7 @@ This repo's code is written by following the "AJAX Crash Course (Vanilla JavaScr
 <br/>You can also follow him on Facebook: https://www.facebook.com/traversymedia/
 <br/>You can also visit: https://www.patreon.com/traversymedia/
 
+<br/>Please follow code from -  https://www.html5rocks.com/en/tutorials/cors/  for CORS (Cross Origin Resource Sharing) 
+
 
 
