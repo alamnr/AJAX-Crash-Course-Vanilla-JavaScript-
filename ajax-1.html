@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style media="screen">
+      .progress{
+        visibility: hidden;
+      }
+    </style>
+    <title>Ajax-1 Text File</title>
+  </head>
+  <body>
+    <button type="button" id="button-1">Get Text File</button>
+    <button type="button" id="button-2">Get PNG File</button>
+    <br> <br>
+    <div class="progress">
+      <div id="indicator" class="progress-bar progress-bar-success progress-bar-striped active" style="width:0%">
+        0%
+      </div>
+    </div>
+    <br> <br>
+   
+    <div id="text"></div>
+   
+    <script type="text/javascript">
+      document.getElementById('button-1').addEventListener('click',()=>{loadText('images/Ajax-5.png')});
+
+       document.getElementById('button-2').addEventListener('click',()=>{loadText('images/Ajax-1.png')});
+      function loadText(path){
+        
+
+        var progressDiv = document.querySelector('.progress');
+        var indicatorDiv = document.querySelector('#indicator');
+
+         document.getElementById('text').innerHTML = ''; 
+         indicatorDiv.className ='progress-bar progress-bar-success progress-bar-striped active';
+
+        console.log(path);
+        //Create xhr object
+
+        var xhr = new XMLHttpRequest();
+
+        // OPEN - type, url/file, async
+       // xhr.open('GET','images/sample.txt',true) ;
+       //xhr.open('GET','images/Ajax-1.PNG',true) ;
+       xhr.open('GET',path,true) ;
+
+       // console.log('Ready State: ', xhr.readyState);
+
+        //  Optional - used for loaders
+        xhr.onprogress = function(){
+         // console.log('Ready State: ', this.readyState);
+        }
+        
+        /*xhr.onload=function(){
+          //  print readystate - 4, onLoad not run until its ready means- 4
+          console.log('Ready State: ', xhr.readyState);
+          if(this.status===200){
+             console.log(this.responseText);
+          }
+        }*/
+
+        xhr.onerror = function(){
+          console.log('Request Error...');
+        }
+        
+        
+        progressDiv.style.visibility='visible';
+        indicatorDiv.style.width= '0%';
+        indicatorDiv.innerHTML= '0%';
+        xhr.onreadystatechange = function(){
+          //console.log('Ready State: ', this.readyState);
+          //console.log('Status: ', this.status);
+          
+          if(this.readyState==1){
+            indicatorDiv.style.width= '25%';
+            indicatorDiv.innerHTML= '25%';
+          }
+          if(this.readyState==2){
+            indicatorDiv.style.width= '50%';
+            indicatorDiv.innerHTML= '50%';
+          }
+          if(this.readyState==3){
+            indicatorDiv.style.width= '75%';
+            indicatorDiv.innerHTML= '75%';
+          }
+          if(this.readyState === 4 && this.status === 200){
+            //console.log(this.responseText);
+            indicatorDiv.style.width= '100%';
+            indicatorDiv.innerHTML= '100%';
+            document.getElementById('text').innerHTML = this.responseText; 
+            
+            //progressDiv.style.visibility='hidden'; 
+          }
+          if(this.status == 404){
+            document.getElementById('text').innerHTML = 'Not Found'; 
+            indicatorDiv.className ='progress-bar progress-bar-danger progress-bar-striped active';
+            indicatorDiv.style.width= '5%';
+            indicatorDiv.innerHTML= '5%';
+          }
+          
+        }
+
+        // Send Request
+
+        xhr.send();
+
+        
+
+        // Ready State Values
+        // 0: request not initialized
+        // 1: server connection established
+        // 2: request received
+        // 3: processing request
+        // 4: request finished and response is ready
+
+        // HTTP Status
+        // 200  - ok
+        // 403 - Forbidden
+        // 404 - Not Found
+        
+      }
+    </script>
+  </body>
+</html>
